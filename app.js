@@ -6,8 +6,6 @@ const moment = require('moment');
 const music = require('discord.js-music-v11');
 require('./util/eventLoader')(client);
 
-client.text = 'neutral';
-
 const log = message => {
   console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
 };
@@ -61,9 +59,9 @@ client.elevation = message => {
 
 music(client, {
 	//prefix: '!',
-	global: false,      // Server-specific queues.
+	//global: false,
 	//maxQueueSize: 20,
-	clearInvoker: true,
+	clearInvoker: true //,
   //channel: 'music'
 });
 
