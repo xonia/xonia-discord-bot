@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const settings = require('./settings.json');
 const fs = require('fs');
 const moment = require('moment');
+const music = require('discord.js-music-v11');
 require('./util/eventLoader')(client);
 
 client.text = 'neutral';
@@ -57,5 +58,13 @@ client.elevation = message => {
   if (message.author.id === settings.ownerid) permlvl = 4;
   return permlvl;
 };
+
+music(client, {
+	//prefix: '!',
+	global: false,      // Server-specific queues.
+	//maxQueueSize: 20,
+	clearInvoker: true,
+  //channel: 'music'
+});
 
 client.login(settings.token);
