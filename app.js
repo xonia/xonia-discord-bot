@@ -61,7 +61,7 @@ music(client, {
 	//prefix: '!',
 	//global: false,
 	//maxQueueSize: 20,
-	clearInvoker: true //,
+	clearInvoker: false //,
   //channel: 'music'
 });
 

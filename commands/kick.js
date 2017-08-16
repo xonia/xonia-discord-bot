@@ -3,8 +3,8 @@ const settings = require('../settings.json');
 exports.run = async (client, message, args) => {
   let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
-  let modlog = client.channels.find('name', settings.modlogchannel);
   let guild = message.guild;
+  let modlog = guild.channels.find('name', settings.modlogchannel);
   let person = message.mentions.users.first();
 
   if(!modlog) return message.reply('I cannot find a modlog channel.').catch(console.error);
@@ -21,18 +21,19 @@ exports.run = async (client, message, args) => {
     console.log(error);
   }
 
+  if(!modlog) return console.log('could not find modlog');
   const embed = new Discord.RichEmbed()
     .setColor(0xffa700)
     .setTimestamp()
     .setDescription(`**Action:** Kick\n**Target:** ${user.tag} (${user.id})\n**Moderator:** ${message.author.username}#${message.author.discriminator}\n**Reason:** ${reason}\n`);
-  return guild.channels.get(modlog.id).send({embed});
+  return message.guild.channels.get(modlog.id).send({embed});
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 4
+  permLevel: 3
 };
 
 exports.help = {

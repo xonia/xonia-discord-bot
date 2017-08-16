@@ -2,18 +2,19 @@ const Discord = require('discord.js');
 const settings = require('../settings.json');
 exports.run = function(client, message, args) {
   let guild = message.guild;
-  let modlog = client.channels.find('name', settings.modlogchannel);
+  let modlog = guild.channels.find('name', settings.modlogchannel);
   if(args.length == 1) {
     let messagecount = parseInt(args.join(' '));
     if(!messagecount) return message.reply('you must specify a number of messages to delete.');
     if(messagecount < 2 || messagecount > 99) return message.reply('please enter a valid number (2 - 99).');
     message.channel.fetchMessages({limit: (messagecount + 1)}).then(messages => message.channel.bulkDelete(messages));
 
+    if(!modlog) return console.log('could not find modlog');
     const embed = new Discord.RichEmbed()
       .setColor(0xffea1f)
       .setTimestamp()
       .setDescription(`**Action:** Purge\n**Channel:** ${message.channel}\n**Moderator:** ${message.author.username}#${message.author.discriminator}\n**Deleted:** ${messagecount}`);
-    return guild.channels.get(modlog.id).send({embed});
+    return message.guild.channels.get(modlog.id).send({embed});
   }
   else if(args.length == 2) {
     let user =  message.mentions.users.first();
@@ -36,11 +37,12 @@ exports.run = function(client, message, args) {
               if(!completed && (deleted == messagecount || m == allMessages.last())) {
                 message.channel.bulkDelete(messagesToDelete);
                 completed = true;
+                if(!modlog) return console.log('could not find modlog');
                 const embed = new Discord.RichEmbed()
                   .setColor(0xffea1f)
                   .setTimestamp()
                   .setDescription(`**Action:** Purge User\n**Channel:** ${message.channel}\n**Target:** ${user.tag} (${user.id})\n**Moderator:** ${message.author.username}#${message.author.discriminator}\n**Deleted:** ${deleted}`);
-                return guild.channels.get(modlog.id).send({embed});
+                return message.guild.channels.get(modlog.id).send({embed});
               }
             }).catch(console.error);
           }
@@ -58,7 +60,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 4
+  permLevel: 3
 };
 
 exports.help = {

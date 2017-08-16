@@ -3,8 +3,8 @@ const settings = require('../settings.json');
 exports.run = async (client, message, args) => {
   let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
-  let modlog = client.channels.find('name', settings.modlogchannel);
   let guild = message.guild;
+  let modlog = guild.channels.find('name', settings.modlogchannel);
   let person = message.mentions.users.first();
 
   if(!modlog) return message.reply('I cannot find a modlog channel.').catch(console.error);
@@ -32,7 +32,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: 4
+  permLevel: 3
 };
 
 exports.help = {
