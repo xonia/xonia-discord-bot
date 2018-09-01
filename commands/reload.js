@@ -1,5 +1,7 @@
+const Discord = require('discord.js');
 exports.run = (client, message, args) => {
-  let command;
+  let command = args.slice(1).join(' ');
+  console.log(command);
   if (client.commands.has(args[0])) {
     command = args[0];
   } else if (client.aliases.has(args[0])) {
@@ -28,8 +30,10 @@ exports.conf = {
   permLevel: 4
 };
 
+
 exports.help = {
   name: 'reload',
   description: 'Reloads the command file.',
   usage: 'reload <commandname>'
 };
+

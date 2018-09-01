@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
   if(!message.guild.member(user).bannable) return message.reply ('I cannot ban that member');
 
   try {
-    await person.send(`${person.username}, you were banned from ${guild.name} for ${reason}`);
+    await person.send(`${person.username}, you were banned from ${guild.name} ${reason}`);
     await guild.ban(user); // ban(user, days)
   } catch(error) {
     console.log(error);

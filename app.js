@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const settings = require('./settings.json');
 const fs = require('fs');
 const moment = require('moment');
-const music = require('discord.js-music-v11');
+//const music = require('discord.js-music-v11');
 require('./util/eventLoader')(client);
 
 const log = message => {
@@ -17,7 +17,7 @@ fs.readdir('./commands/', (err, files) => {
   log(`Loading a total of ${files.length} commands.`);
   files.forEach(f => {
     let props = require(`./commands/${f}`);
-    log(`Loading Command: ${props.help.name}. 👌`);
+    log(`Loading Command: ${props.help.name}.`);
     client.commands.set(props.help.name, props);
     props.conf.aliases.forEach(alias => {
       client.aliases.set(alias, props.help.name);
@@ -49,14 +49,16 @@ client.elevation = message => {
   /* This function should resolve to an ELEVATION level which
      is then sent to the command handler for verification*/
   let permlvl = 0;
-  let mod_role = message.guild.roles.find('name', settings.modrolename);
+  let mod_role = message.guild.roles.find(mod_role => 'name', settings.modrolename);
   if (mod_role && message.member.roles.has(mod_role.id)) permlvl = 2;
-  let admin_role = message.guild.roles.find('name', settings.adminrolename);
+  let admin_role = message.guild.roles.find(admin_role => 'name', settings.adminrolename);
   if (admin_role && message.member.roles.has(admin_role.id)) permlvl = 3;
   if (message.author.id === settings.ownerid) permlvl = 4;
   return permlvl;
 };
 
+
+/*
 music(client, {
 	//prefix: '!',
 	//global: false,
@@ -64,5 +66,6 @@ music(client, {
 	clearInvoker: false //,
   //channel: 'music'
 });
+*/
 
 client.login(settings.token);

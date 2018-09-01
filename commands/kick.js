@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
   if(!message.guild.member(user).kickable) return message.reply ('I cannot kick that member');
 
   try {
-    await person.send(`${person.username}, you were kicked from ${guild.name} for ${reason}`);
+    await person.send(`${person.username}, you were kicked from ${guild.name} ${reason}`);
     await guild.member(user).kick();
   } catch(error) {
     console.log(error);

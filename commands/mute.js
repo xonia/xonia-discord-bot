@@ -8,7 +8,8 @@ exports.run = (client, message, args) => {
   let guild = message.guild;
   let user = message.mentions.users.first();
   let modlog = guild.channels.find('name', settings.modlogchannel);
-  let muteRole = client.guilds.get(message.guild.id).roles.find('name', settings.muterolename);
+  let muteRole = client.guilds.get(message.guild.id).roles.find('name' ,settings.muterolename);
+  
 
   if(!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
   if(!time || !ms(time)) return message.reply('You must set a duration for the mute in either hours, minutes or seconds.').catch(console.error);
